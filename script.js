@@ -15,7 +15,9 @@ firstScoreEl.textContent = 0;
 secondScoreEl.textContent = 0;
 diceImg.classList.add('hide');
 
+const playersScores = [0, 0];
 let currentScore = 0;
+let currentPlayer = 0;
 
 //Rolling the dice function
 buttonRoll.addEventListener('click', function () {
