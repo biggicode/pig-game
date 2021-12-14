@@ -20,6 +20,7 @@ diceImg.classList.add('hide');
 const playersScores = [0, 0];
 let currentScore = 0;
 let currentPlayer = 0;
+let working = true;
 
 const switchPlayer = function () {
   document.getElementById(`current--${currentPlayer}`).textContent = 0;
@@ -31,28 +32,45 @@ const switchPlayer = function () {
 
 //Rolling the dice function
 buttonRoll.addEventListener('click', function () {
-  //Generating random dice number
-  const dice = Math.trunc(Math.random() * 6 + 1);
+  if (working) {
+    //Generating random dice number
+    const dice = Math.trunc(Math.random() * 6 + 1);
 
-  //Display the dice number
-  diceImg.classList.remove('hide');
-  diceImg.src = `dice-${dice}.png`;
+    //Display the dice number
+    diceImg.classList.remove('hide');
+    diceImg.src = `dice-${dice}.png`;
 
-  //If dice number is one switch to the next player
-  if (dice !== 1) {
-    // Add dice number to the current score
-    currentScore += dice;
-    document.getElementById(`current--${currentPlayer}`).textContent =
-      currentScore;
-  } else {
-    switchPlayer();
+    //If dice number is one switch to the next player
+    if (dice !== 1) {
+      // Add dice number to the current score
+      currentScore += dice;
+      document.getElementById(`current--${currentPlayer}`).textContent =
+        currentScore;
+    } else {
+      switchPlayer();
+    }
   }
 });
 
 buttonHold.addEventListener('click', function () {
-  //Add current score to active player's score
-  playersScores[currentPlayer] += currentScore;
-  document.getElementById(`score--${currentPlayer}`).textContent =
-    playersScores[currentPlayer];
-  switchPlayer();
+  if (working) {
+    //Add current score to active player's score and display it
+    playersScores[currentPlayer] += currentScore;
+    document.getElementById(`score--${currentPlayer}`).textContent =
+      playersScores[currentPlayer];
+
+    //Check if player won
+    if (playersScores[currentPlayer] >= 30) {
+      working = false;
+      document
+        .querySelector(`.player--${currentPlayer}`)
+        .classList.add('player--winner');
+      document
+        .querySelector(`.player--${currentPlayer}`)
+        .classList.remove('player--active');
+      diceImg.classList.add('hide');
+    } else {
+      switchPlayer();
+    }
+  }
 });
