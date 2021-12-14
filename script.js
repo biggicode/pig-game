@@ -13,14 +13,28 @@ const buttonRoll = document.querySelector('.btn--roll');
 const buttonHold = document.querySelector('.btn--hold');
 
 //Start reset
-firstScoreEl.textContent = 0;
-secondScoreEl.textContent = 0;
-diceImg.classList.add('hide');
 
-const playersScores = [0, 0];
-let currentScore = 0;
-let currentPlayer = 0;
-let working = true;
+let playersScores, currentScore, currentPlayer, working;
+
+const resetFunction = function () {
+  firstPlayer.classList.remove('player--winner');
+  secondPlayer.classList.remove('player--winner');
+  firstPlayer.classList.add('player--active');
+  secondPlayer.classList.remove('player--active');
+  diceImg.classList.add('hide');
+
+  firstScoreEl.textContent = 0;
+  secondScoreEl.textContent = 0;
+  firstCurrentEl.textContent = 0;
+  secondCurrentEl.textContent = 0;
+
+  playersScores = [0, 0];
+  currentScore = 0;
+  currentPlayer = 0;
+  working = true;
+};
+
+resetFunction();
 
 const switchPlayer = function () {
   document.getElementById(`current--${currentPlayer}`).textContent = 0;
@@ -60,7 +74,7 @@ buttonHold.addEventListener('click', function () {
       playersScores[currentPlayer];
 
     //Check if player won
-    if (playersScores[currentPlayer] >= 30) {
+    if (playersScores[currentPlayer] >= 20) {
       working = false;
       document
         .querySelector(`.player--${currentPlayer}`)
@@ -74,3 +88,5 @@ buttonHold.addEventListener('click', function () {
     }
   }
 });
+
+buttonNew.addEventListener('click', resetFunction);
