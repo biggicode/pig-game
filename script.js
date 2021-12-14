@@ -74,7 +74,7 @@ buttonHold.addEventListener('click', function () {
       playersScores[currentPlayer];
 
     //Check if player won
-    if (playersScores[currentPlayer] >= 20) {
+    if (playersScores[currentPlayer] >= 50) {
       working = false;
       document
         .querySelector(`.player--${currentPlayer}`)
