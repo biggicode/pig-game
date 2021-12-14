@@ -1,6 +1,8 @@
 'use strict';
 
 //Selecting elements
+const firstPlayer = document.querySelector('.player--0');
+const secondPlayer = document.querySelector('.player--1');
 const diceImg = document.querySelector('.dice');
 const firstScoreEl = document.querySelector('#score--0');
 const secondScoreEl = document.getElementById('score--1');
@@ -32,7 +34,13 @@ buttonRoll.addEventListener('click', function () {
   if (dice !== 1) {
     // Add dice number to the current score
     currentScore += dice;
-    firstCurrentEl.textContent = currentScore; //Change it later
+    document.getElementById(`current--${currentPlayer}`).textContent =
+      currentScore;
   } else {
+    document.getElementById(`current--${currentPlayer}`).textContent = 0;
+    currentPlayer = currentPlayer === 0 ? 1 : 0;
+    currentScore = 0;
+    firstPlayer.classList.toggle('player--active');
+    secondPlayer.classList.toggle('player--active');
   }
 });
